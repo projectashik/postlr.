@@ -10,7 +10,7 @@ export const Button = ({
     <button
       type={type}
       onClick={onClick}
-      className={className + '  relative'}
+      className={className + '  relative disabled:cursor-not-allowed'}
       disabled={loading}
     >
       {loading && (
