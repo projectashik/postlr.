@@ -11,33 +11,42 @@ async function handler(
   req: RequireSessionProp<NextApiRequest>,
   res: NextApiResponse
 ) {
-  try {
-    const userId = <string>req.session.userId;
-    const fileStr = req.body.data;
-    const uploadedResponse = await cloudinary.uploader.upload(fileStr);
-    const { url } = uploadedResponse;
-    if (uploadedResponse) {
-      try {
-        const response = await prisma.images.create({
-          data: {
-            url,
-            userId,
-          },
-        });
+  if (req.method === 'POST') {
+    try {
+      const userId = <string>req.session.userId;
+      const fileStr = req.body.data;
+      const uploadedResponse = await cloudinary.uploader.upload(fileStr);
+      const { url } = uploadedResponse;
+      if (uploadedResponse) {
+        try {
+          const response = await prisma.images.create({
+            data: {
+              url,
+              userId,
+            },
+          });
 
-        res.json({
-          success: true,
-          data: response,
-        });
-      } catch (error) {
-        res.json({
-          success: false,
-          error: error.message,
-        });
+          res.json({
+            success: true,
+            data: response,
+          });
+        } catch (error) {
+          res.json({
+            success: false,
+            error: error.message,
+          });
+        }
       }
+    } catch (error) {
+      res.status(500).json({ err: 'Something went wrong' });
     }
-  } catch (error) {
-    res.status(500).json({ err: 'Something went wrong' });
+  } else {
+    res.json({
+      success: false,
+      error: {
+        message: 'Invalid method',
+      },
+    });
   }
 }
 

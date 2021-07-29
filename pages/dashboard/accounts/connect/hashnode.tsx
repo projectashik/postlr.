@@ -23,12 +23,14 @@ import {
   userHashnodePublicationIdAtom,
 } from 'states';
 import axios from 'axios';
+import { FaInfoCircle } from 'react-icons/fa';
+import Tippy from '@tippyjs/react';
 
 export default function ConnectHashnodeIndex() {
   // Router Import
   const router = useRouter();
 
-  // React States
+  // States
   const [hashnodeToken, setHashnodeToken] = useAtom(hashnodeTokenAtom);
   const [hashnodeUsername, setHashnodeUsername] = useAtom(hashnodeUsernameAtom);
   const [hashnodeTokenProcessing, setHashnodeTokenProcessing] = useState(false);
@@ -46,8 +48,6 @@ export default function ConnectHashnodeIndex() {
       token: hashnodeToken,
     });
 
-    console.log(res)
-
     if (!res.data.success) {
       setHashnodeTokenProcessing(false);
       if (res.data.error && res.data.error.field) {
@@ -64,7 +64,7 @@ export default function ConnectHashnodeIndex() {
       return false;
     }
 
-    toast.success('Working');
+    toast.success('Hashnode Connected');
     setHashnodeTokenProcessing(false);
   };
   return (
@@ -102,6 +102,8 @@ export default function ConnectHashnodeIndex() {
               <p className='text-xs text-gray-500 flex items-center mt-2'>
                 You can get the hashnode token from{' '}
                 <a
+                  target='_blank'
+                  rel='noreferrer'
                   href='https://hashnode.com/settings/developer'
                   className='text-primary px-2'
                 >
@@ -114,7 +116,17 @@ export default function ConnectHashnodeIndex() {
               </p>
             </div>
             <div className='mt-14'>
-              <label htmlFor='hashnode_username'>Hashnode Username</label>
+              <label
+                htmlFor='hashnode_username'
+                className='flex items-center gap-2'
+              >
+                Hashnode Username{' '}
+                <Tippy content='To fetch publication detail'>
+                  <button type='button'>
+                    <FaInfoCircle />
+                  </button>
+                </Tippy>
+              </label>
               <input
                 type='text'
                 required
@@ -144,19 +156,19 @@ export default function ConnectHashnodeIndex() {
               <Button
                 type='submit'
                 className='bg-hashnode hover:bg-primary-700 p-2 px-4 text-sm mt-4 rounded text-white'
-                loading={
-                  hashnodeTokenProcessing
-                  // userLoading ||
-                  // tokenValidationLoading ||
-                  // testPostDeleteLoading ||
-                  // tokenAddLoading ||
-                  // hashnodeInfoAddLoading
-                }
+                loading={hashnodeTokenProcessing}
               >
                 Continue
               </Button>
             </div>
           </form>
+          <div className='border mb-5 p-5 rounded dark:border-gray-600'>
+            <h4 className='font-bold'>How we validate your token?</h4>
+            <p>
+              We validate your token by creating an article in your hashnode
+              blog. Later we remove that article once your token is validated.
+            </p>
+          </div>
         </div>
       </main>
     </>

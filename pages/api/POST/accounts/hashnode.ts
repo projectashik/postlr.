@@ -9,95 +9,104 @@ async function handler(
   req: RequireSessionProp<NextApiRequest>,
   res: NextApiResponse
 ) {
-  const userId = <string>req.session.userId;
-  const { username, token } = req.body;
-  const usernameCheckResponse = await prisma.hashnodeInfo.findFirst({
-    where: {
-      username,
-    },
-  });
-
-  if (usernameCheckResponse) {
-    res.json({
-      success: false,
-      error: {
-        field: 'username',
-        message: 'Username already exists.',
+  if (req.method === 'POST') {
+    const userId = <string>req.session.userId;
+    const { username, token } = req.body;
+    const usernameCheckResponse = await prisma.hashnodeInfo.findFirst({
+      where: {
+        username,
       },
     });
-  } else {
-    try {
-      // === Check username
-      // Send request to hashnode api to check whether the user exist or not
-      const hashnodeApiRes = await axios.post(
-        <string>process.env.HASHNODE_API,
-        {
-          query: `query {
+
+    if (usernameCheckResponse) {
+      res.json({
+        success: false,
+        error: {
+          field: 'username',
+          message: 'Username already exists.',
+        },
+      });
+    } else {
+      try {
+        // === Check username
+        // Send request to hashnode api to check whether the user exist or not
+        const hashnodeApiRes = await axios.post(
+          <string>process.env.HASHNODE_API,
+          {
+            query: `query {
             user(username: "${username}") {
               publication {
                 _id
               }
             }
           }`,
-        }
-      );
-      // Fetched Publication ID
-      const publicationId = hashnodeApiRes.data.data.user.publication._id;
+          }
+        );
+        // Fetched Publication ID
+        const publicationId = hashnodeApiRes.data.data.user.publication._id;
 
-      if (publicationId) {
-        // === Check Token
-        try {
-          // Send Request to hashnode api to create the post
-          const hashnodeCreatePostResponse = await axios({
-            url: <string>process.env.HASHNODE_API,
-            method: 'POST',
-            data: {
-              query: createTestPOSTGQL(publicationId),
-            },
-            headers: {
-              Authorization: token,
-            },
-          });
-          // If the token is valid remove post
-          const postId =
-            hashnodeCreatePostResponse.data.data.createPublicationStory.post
-              ._id;
+        if (publicationId) {
+          // === Check Token
           try {
-            const hashnodeDeletePostResponse = await axios({
+            // Send Request to hashnode api to create the post
+            const hashnodeCreatePostResponse = await axios({
               url: <string>process.env.HASHNODE_API,
               method: 'POST',
               data: {
-                query: deletePost(postId),
+                query: createTestPOSTGQL(publicationId),
               },
               headers: {
                 Authorization: token,
               },
             });
-
+            // If the token is valid remove post
+            const postId =
+              hashnodeCreatePostResponse.data.data.createPublicationStory.post
+                ._id;
             try {
-              const tokenResponse = await prisma.tokens.create({
+              const hashnodeDeletePostResponse = await axios({
+                url: <string>process.env.HASHNODE_API,
+                method: 'POST',
                 data: {
-                  token: encryptToken(token),
-                  platform: 'hashnode',
-                  userId,
+                  query: deletePost(postId),
+                },
+                headers: {
+                  Authorization: token,
                 },
               });
 
-              const { id: tokenId } = tokenResponse;
-
               try {
-                const hashnodeInfoResponse = await prisma.hashnodeInfo.create({
+                const tokenResponse = await prisma.tokens.create({
                   data: {
-                    publicationId,
-                    username,
+                    token: encryptToken(token),
+                    platform: 'hashnode',
                     userId,
-                    tokenId,
                   },
                 });
 
-                res.json({
-                  success: true,
-                });
+                const { id: tokenId } = tokenResponse;
+
+                try {
+                  const hashnodeInfoResponse = await prisma.hashnodeInfo.create(
+                    {
+                      data: {
+                        publicationId,
+                        username,
+                        userId,
+                        tokenId,
+                      },
+                    }
+                  );
+
+                  res.json({
+                    success: true,
+                  });
+                } catch (error) {
+                  res.json({
+                    success: false,
+                    message: error,
+                  });
+                }
               } catch (error) {
                 res.json({
                   success: false,
@@ -107,46 +116,48 @@ async function handler(
             } catch (error) {
               res.json({
                 success: false,
-                message: error,
+                message: error.message,
+                error:
+                  'Unable to delete test post. Please visit you blog and delete the test post',
               });
             }
           } catch (error) {
             res.json({
               success: false,
               message: error.message,
-              error:
-                'Unable to delete test post. Please visit you blog and delete the test post',
+              error: {
+                field: 'token',
+                message: 'Maybe your token is not correct',
+              },
             });
           }
-        } catch (error) {
+        } else {
           res.json({
             success: false,
-            message: error.message,
             error: {
-              field: 'token',
-              message: 'Maybe your token is not correct',
+              field: 'username',
+              message: 'Maybe your username is not correct',
             },
           });
         }
-      } else {
+      } catch (error) {
         res.json({
           success: false,
+          message: error.message,
           error: {
             field: 'username',
             message: 'Maybe your username is not correct',
           },
         });
       }
-    } catch (error) {
-      res.json({
-        success: false,
-        message: error.message,
-        error: {
-          field: 'username',
-          message: 'Maybe your username is not correct',
-        },
-      });
     }
+  } else {
+    res.json({
+      success: false,
+      error: {
+        message: 'Invalid method',
+      },
+    });
   }
 }
 

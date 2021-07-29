@@ -10,7 +10,11 @@ import { ImageUploadWindow } from 'components';
 
 // States Imports
 import { useAtom } from 'jotai';
-import { displayImageUploadWindowAtom, displayPublishBarAtom } from 'states';
+import {
+  articleTitleAtom,
+  displayImageUploadWindowAtom,
+  displayPublishBarAtom,
+} from 'states';
 import { FaUpload } from 'react-icons/fa';
 
 export default function CreateArticle() {
@@ -19,6 +23,7 @@ export default function CreateArticle() {
     displayImageUploadWindowAtom
   );
   const [, setPublishBar] = useAtom(displayPublishBarAtom);
+  const [title, setTitle] = useAtom(articleTitleAtom);
   return (
     <>
       <Head>
@@ -54,6 +59,10 @@ export default function CreateArticle() {
             <input
               placeholder='Title'
               type='text'
+              value={title}
+              onChange={(e) => {
+                setTitle(e.target.value);
+              }}
               className='font-bold text-3xl block w-full py-3 outline-none'
             />
           </div>

@@ -31,7 +31,7 @@ export default function DashboardIndex() {
       {register && <WelcomeWindow />}
       {login && <WelcomeWindow state='login' />}
       <DashboardNavbar />
-      <main className='container mx-auto px-4 mt-4'>
+      <main className='container mx-auto px-4 mt-4 overflow-x-hidden'>
         {scheduledArticles.length > 0 && (
           <section id='scheduled'>
             <div className='flex items-center justify-between'>

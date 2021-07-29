@@ -34,3 +34,21 @@ model hashnodeInfo {
   publicationId String @unique @db.VarChar
   createdAt DateTime @default(now()) @db.Timestamp(6)
 }
+
+model articles {
+   id            String  @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  userId String @db.VarChar
+  title String @db.VarChar
+  content String @db.VarChar
+  coverImageUrl String? @db.VarChar
+  isHashnode Boolean @default(true)
+  isDevTo Boolean @default(true)
+  hashnodeSelectedTags Json?
+  hideFromHashnodeFeed Boolean @default(false)
+  hashnodeCoverImageUrl String? @db.VarChar 
+  devToCoverImageUrl String? @db.VarChar
+  devToTags String? @db.VarChar
+  devToSeries String? @db.VarChar
+  scheduledAt DateTime? @db.Timestamp(6)
+  createdAt DateTime @default(now()) @db.Timestamp(6)
+}

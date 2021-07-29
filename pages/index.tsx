@@ -88,13 +88,12 @@ export default function HomePage() {
           className='md:my-20 my-20 md:w-2/3 mx-auto flex flex-col items-center px-4'
         >
           <h1 className='text-center text-5xl font-black leading-snug md:leading-normal'>
-            <span className='text-primary'>Cross platform</span> blogging and
+            <span className='text-primary'>Multi platform</span> blogging and
             post <span className='text-primary'>scheduling</span>
           </h1>
           <p className='text-center md:mt-8 mt-5'>
             Publish or schedule your posts to{' '}
-            <a href='https://hashnode.com'>Hashnode</a>,{' '}
-            <a href='https://medium.com'>Medium</a> and{' '}
+            <a href='https://hashnode.com'>Hashnode</a>, and{' '}
             <a href='https://dev.to'>Dev.to</a>
           </p>
           <Link href='/auth/sign-in'>
@@ -110,7 +109,7 @@ export default function HomePage() {
             <h2 className='section-heading text-center font-bold text-2xl'>
               Platforms
             </h2>
-            <div className='grid md:grid-cols-3 grid-cols-1 gap-10 md:gap-44 mt-10'>
+            <div className='grid md:grid-cols-2 grid-cols-1 gap-10 md:gap-44 mt-10'>
               <div className='flex flex-col items-center gap-4'>
                 <Image
                   src='/platforms/hashnode.png'
@@ -130,30 +129,13 @@ export default function HomePage() {
               </div>
               <div className='flex flex-col items-center gap-4'>
                 <Image
-                  src='/platforms/medium.png'
-                  width='100'
-                  height='100'
-                  alt='Hashnode Logo'
-                />
-                <a
-                  href='https://hashnode.com'
-                  className='flex items-center gap-1 text-gray-800'
-                >
-                  Medium{' '}
-                  <span className='text-sm'>
-                    <FaExternalLinkAlt />
-                  </span>
-                </a>
-              </div>
-              <div className='flex flex-col items-center gap-4'>
-                <Image
                   src='/platforms/devto.png'
                   width='100'
                   height='100'
-                  alt='Hashnode Logo'
+                  alt='Dev.tp Logo'
                 />
                 <a
-                  href='https://hashnode.com'
+                  href='https://dev.to'
                   className='flex items-center gap-1 text-gray-800'
                 >
                   Dev.to{' '}

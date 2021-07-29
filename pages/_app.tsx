@@ -36,7 +36,7 @@ function MyApp({ Component, pageProps }: AppProps) {
    * Otherwise, use Clerk to require authentication.
    */
   return (
-    <>
+    <div className='overflow-x-hidden'>
       <NextNprogress
         color='#2563eb'
         startPosition={0.3}
@@ -53,17 +53,19 @@ function MyApp({ Component, pageProps }: AppProps) {
           <Component {...pageProps} />
         ) : (
           <>
-            <SignedIn>
+            <div>
+              <SignedIn>
                 <Component {...pageProps} />
-            </SignedIn>
-            <SignedOut>
-              <RedirectToSignIn />
-            </SignedOut>
+              </SignedIn>
+              <SignedOut>
+                <RedirectToSignIn />
+              </SignedOut>
+            </div>
           </>
         )}
         <Toaster />
       </ClerkProvider>
-    </>
+    </div>
   );
 }
 

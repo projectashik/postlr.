@@ -29,7 +29,6 @@ export const PreviousUploads = () => {
             // @ts-ignore
             images.map((image: any) => (
               <Image
-                unoptimized={true}
                 onClick={() => setCurrentSelectedImage(image.id)}
                 src={image.url}
                 className='rounded'

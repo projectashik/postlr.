@@ -16,6 +16,28 @@ export const createTestPOSTGQL = (publicationId: string) => {
   }`;
 };
 
+export const createPOSTGQL = () => {
+  return `mutation (
+    $publicationId: String!, 
+    $title:String!, 
+    $content:String!, 
+    $coverImageUrl:String,
+    $tags:[TagsInput]!
+  ) {
+    createPublicationStory(
+      publicationId:"60031f577b30c23b714a9194",
+      input: {
+        title: "nothitl",
+        contentMarkdown: "Fake Conettn",
+        tags: [],
+        coverImageURL: "nothin",
+      }
+    ) {
+      code
+    }
+  }`;
+};
+
 export const deletePost = (postId: string) => {
   return `mutation {
   deletePost (id: "${postId}") {
@@ -23,3 +45,11 @@ export const deletePost = (postId: string) => {
   }
 }`;
 };
+
+export const fetchTags = `query {
+  tagCategories{
+    name,
+    slug,
+    _id
+  }
+}`;
