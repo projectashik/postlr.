@@ -1,0 +1,24 @@
+.menuButton {
+  @apply inline-flex justify-center w-full px-2 py-2 font-medium rounded-full hover:bg-gray-200 dark:bg-gray-800;
+}
+
+.menuItems {
+  @apply py-1 absolute right-0 w-56 mt-2 origin-top-right bg-white divide-y divide-gray-100  rounded-md shadow-lg focus:outline-none;
+}
+
+.menuItem {
+  @apply flex items-center w-full text-left px-4 py-2 hover:bg-gray-100 text-gray-800;
+}
+
+[class~='dark'] {
+  .menuButton {
+    @apply hover:bg-gray-600;
+  }
+  .menuItems {
+    @apply bg-gray-700 divide-gray-600;
+  }
+
+  .menuItem {
+    @apply text-white hover:bg-gray-600;
+  }
+}

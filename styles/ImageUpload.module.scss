@@ -1,0 +1,40 @@
+.modal {
+  @apply fixed top-0 h-screen left-0 w-screen z-50 flex items-center justify-center;
+}
+
+.backdrop {
+  background-color: rgba(0, 0, 0, 0.8);
+  @apply fixed h-screen w-screen;
+}
+
+.modalContent {
+  @apply fixed flex w-screen h-screen md:w-2/3 md:h-3/4 items-center justify-center z-50;
+  animation: popUp 0.4s;
+  transform-origin: right bottom;
+}
+
+.uploadBody {
+  @apply w-full bg-white rounded p-4 h-full overflow-auto;
+}
+
+.uploadContainer {
+  @apply border border-gray-300 p-2 rounded shadow mt-3;
+}
+[class~='dark'] {
+  .uploadBody {
+    @apply bg-gray-900;
+  }
+
+  .uploadContainer {
+    @apply border-gray-600;
+  }
+}
+
+@keyframes popUp {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}

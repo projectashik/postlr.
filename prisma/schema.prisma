@@ -1,0 +1,36 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+
+model tokens {
+  id String @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  token String @db.VarChar
+  platform String @db.VarChar
+  userId String @db.VarChar
+  createdAt DateTime @default(now()) @db.Timestamp(6)
+}
+
+model images {
+   id            String  @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+   url String @unique @db.VarChar
+  userId String @db.VarChar
+  createdAt DateTime @default(now()) @db.Timestamp(6)
+}
+
+model hashnodeInfo {
+   id            String  @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  username String @unique @db.VarChar
+  userId String @db.VarChar
+  tokenId String @db.VarChar @unique
+  publicationId String @unique @db.VarChar
+  createdAt DateTime @default(now()) @db.Timestamp(6)
+}

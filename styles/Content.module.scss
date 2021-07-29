@@ -1,0 +1,26 @@
+.content-style {
+  overflow: hidden;
+  table {
+    @apply border border-gray-200 w-full overflow-scroll;
+
+    tr {
+      td:first-child,
+      th:first-child {
+        padding-left: 10px;
+      }
+
+      td:last-child,
+      th:last-child {
+        padding-right: 10px;
+      }
+    }
+  }
+}
+
+[class~='dark'] {
+  .content-style {
+    table {
+      @apply dark:border-gray-600;
+    }
+  }
+}
