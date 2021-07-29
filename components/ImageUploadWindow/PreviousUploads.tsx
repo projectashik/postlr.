@@ -39,6 +39,8 @@ export const PreviousUploads = () => {
                 key={image.id}
               />
             ))}
+          {/* @ts-ignore */}
+          {images && images.length < 1 && <p>No Data Found</p>}
 
           {!images && <Skeleton height={200} />}
         </div>
