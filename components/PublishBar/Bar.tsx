@@ -187,18 +187,6 @@ export const PublishBar = () => {
             </p>
           </div>
           <div className={styles.card}>
-            <div className={'flex items-center justify-between ' + styles.card}>
-              <label htmlFor='schedule'>Schedule</label>
-              <input
-                type='checkbox'
-                className='w-4 h-4 dark:text-gray-700'
-                id='schedule'
-                value={isScheduled ? 'on' : 'off'}
-                onChange={(e) =>
-                  setIsScheduled(e.target.value === 'on' ? true : false)
-                }
-              />
-            </div>
             <div className={' mt-2 ' + styles.card}>
               <label htmlFor='scheduleDateTime'>Schedule Date Time</label>
               <input
@@ -210,6 +198,9 @@ export const PublishBar = () => {
                   setScheduledAt(e.target.value);
                 }}
               />
+              <span className='text-sm text-gray-600'>
+                If empty, post will be published
+              </span>
             </div>
           </div>
           <div className='flex flex-col gap-2'>
