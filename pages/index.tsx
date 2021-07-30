@@ -148,17 +148,6 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Features */}
-        <section id='features'>
-          <div className='container mx-auto p-10 flex flex-col items-center'>
-            <h2 className='section-heading text-center font-bold text-2xl'>
-              Features
-            </h2>
-
-            <div></div>
-          </div>
-        </section>
-
         {/* Patterns */}
         <div className='hidden md:block '>
           <div className='absolute top-48 left-40'>
