@@ -49,6 +49,7 @@ model articles {
   devToCoverImageUrl String? @db.VarChar
   devToTags String? @db.VarChar
   devToSeries String? @db.VarChar
-  scheduledAt DateTime? @db.Timestamp(6)
+  scheduledAt DateTime? @db.Timestamptz(6)
+  publishedAt DateTime? @db.Timestamptz(6)
   createdAt DateTime @default(now()) @db.Timestamp(6)
 }

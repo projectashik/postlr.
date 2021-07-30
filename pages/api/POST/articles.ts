@@ -105,7 +105,7 @@ async function handler(
               method: 'POST',
               url: <string>process.env.HASHNODE_API,
               headers: {
-                Authorization: '6a8ff3c9-f5ed-496d-b751-65e2365a0f71',
+                Authorization: token,
               },
               data: {
                 query: `
