@@ -6,6 +6,8 @@ import { useAtom } from 'jotai';
 import ReactMarkdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { materialDark } from 'react-syntax-highlighter/dist/cjs/styles/prism';
+import React from 'react';
+import { GuideSection } from 'components/GuideSection';
 const gfm = require('remark-gfm');
 export const Editor = () => {
   const [currentEditorTab] = useAtom<string>(currentEditorTabAtom);
@@ -46,7 +48,7 @@ export const Editor = () => {
         id='guidearea'
         className={currentEditorTab === 'guide' ? 'block px-3 my-3' : 'hidden'}
       >
-        This is guide area
+        <GuideSection />
       </div>
     </>
   );
