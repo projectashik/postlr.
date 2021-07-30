@@ -163,7 +163,7 @@ export const PublishBar = () => {
           <Button
             onClick={onPublish}
             loading={processing}
-            disabled={!onHashnode || !onDevTo}
+            disabled={!onHashnode && !onDevTo}
             className=' flex items-center py-1 px-3 bg-primary text-white rounded'
           >
             <FaPaperPlane />
