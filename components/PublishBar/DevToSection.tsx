@@ -1,5 +1,10 @@
 import { useAtom } from 'jotai';
-import { devToCoverImageUrlAtom, devToSeriesAtom, devToTagsAtom } from 'states';
+import {
+  devToCoverImageUrlAtom,
+  devToSeriesAtom,
+  devToTagsAtom,
+  onDevToAtom,
+} from 'states';
 import styles from 'styles/PublishBar.module.scss';
 const DevToSection = () => {
   const [devToCoverImageUrl, setDevToCoverImageUrl] = useAtom(
@@ -7,11 +12,23 @@ const DevToSection = () => {
   );
   const [devToTags, setDevToTags] = useAtom(devToTagsAtom);
   const [devToSeries, setDevToSeries] = useAtom(devToSeriesAtom);
+  const [onDevTo, setOnDevTo] = useAtom(onDevToAtom);
+
+  const cancelDevTo = (e: any) => {
+    e.preventDefault();
+    setOnDevTo(false);
+  };
   return (
     <>
       <div className={styles.card}>
-        <div className='header  p-2  border-b dark:border-gray-600'>
+        <div className='header  p-2  border-b dark:border-gray-600  flex justify-between items-center'>
           <p>DevTo Settings ⚙️</p>
+          <button
+            className='bg-red-400 border-2 border-red-600 px-2 rounded text-white'
+            onClick={cancelDevTo}
+          >
+            Cancel
+          </button>
         </div>
         <div className='body p-2 flex flex-col gap-2'>
           <div className={styles.card}>

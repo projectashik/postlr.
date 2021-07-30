@@ -35,11 +35,17 @@ import axios from 'axios';
 import HashnodeSection from './HashnodeSection';
 import DevToSection from './DevToSection';
 import toast from 'react-hot-toast';
+import { useEffect } from 'react';
+import { useClerkSWR } from 'libs/fetcher';
+import { tokens } from '@prisma/client';
 
 export const PublishBar = () => {
   const [displayPublishBar, setDisplayPublishBar] = useAtom(
     displayPublishBarAtom
   );
+
+  const [hashnodeProcessing, setHashnodeProcessing] = useState(false);
+  const [devToProcessing, setDevToProcessing] = useState(false);
 
   const [onHashnode, setOnHashnode] = useAtom(onHashnodeAtom);
   const [onDevTo, setOnDevTo] = useAtom(onDevToAtom);
@@ -71,16 +77,39 @@ export const PublishBar = () => {
   const [isScheduled, setIsScheduled] = useAtom(isScheduledAtom);
   const [scheduledAt, setScheduledAt] = useAtom(scheduledAtAtom);
 
+  const { data: tokens } = useClerkSWR<tokens[]>('/api/GET/tokens');
   // Setup for hashnode
   const setupForHashnode = async () => {
-    setOnHashnode(true);
-    const hashnodeTagsResponse = await axios.get('/api/GET/hashnodeTags');
-    setHashnodeTags(hashnodeTagsResponse.data.tags);
+    setHashnodeProcessing(true);
+    const hashnodeToken = tokens?.filter((t) => {
+      return t.platform === 'hashnode';
+    });
+    if (hashnodeToken && hashnodeToken?.length > 0) {
+      setOnHashnode(true);
+      const hashnodeTagsResponse = await axios.get('/api/GET/hashnodeTags');
+      setHashnodeTags(hashnodeTagsResponse.data.tags);
+      setHashnodeProcessing(false);
+    } else {
+      toast.error('Hashnode Token not added');
+      setHashnodeProcessing(false);
+      return false;
+    }
   };
 
   // Setup for Dev TO
   const setupForDevTo = () => {
-    setOnDevTo(true);
+    setDevToProcessing(true);
+    const devToToken = tokens?.filter((t) => {
+      return t.platform === 'devto';
+    });
+    if (devToToken && devToToken?.length > 0) {
+      setOnDevTo(true);
+      setDevToProcessing(false);
+    } else {
+      toast.error('Dev.to account not added');
+      setDevToProcessing(false);
+      return false;
+    }
   };
 
   const onPublish = async () => {
@@ -111,7 +140,7 @@ export const PublishBar = () => {
     });
 
     console.log(createResponse);
-    toast('Article Published');
+    toast(createResponse.data.message);
     setProcessing(false);
   };
 
@@ -188,6 +217,7 @@ export const PublishBar = () => {
               <Button
                 onClick={setupForHashnode}
                 className='py-2 rounded bg-hashnode text-white'
+                loading={hashnodeProcessing}
               >
                 Setup for hashnode
               </Button>
@@ -196,6 +226,7 @@ export const PublishBar = () => {
               <Button
                 onClick={setupForDevTo}
                 className='py-2 rounded bg-devto text-white'
+                loading={devToProcessing}
               >
                 Setup for dev.to
               </Button>

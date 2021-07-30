@@ -180,6 +180,7 @@ async function handler(
 
       res.json({
         success: true,
+        message: 'Article Published',
       });
     } catch (error) {
       res.json({

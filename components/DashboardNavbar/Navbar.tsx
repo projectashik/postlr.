@@ -5,6 +5,8 @@ import MoreMenu from './menus/MoreMenu';
 import menuStyles from '@styles/Menu.module.scss';
 import { BsPlus } from 'react-icons/bs';
 import Tippy from '@tippyjs/react';
+import React from 'react';
+import { FiUserPlus } from 'react-icons/fi';
 
 export const Navbar = () => {
   return (
@@ -30,7 +32,11 @@ export const Navbar = () => {
               <BsPlus />
             </a>
           </Link>
-          <MoreMenu />
+          <Link href='/dashboard/accounts' passHref>
+            <a title='Accounts' className='rounded-full p-2 hover:bg-gray-100'>
+              <FiUserPlus />
+            </a>
+          </Link>
           <UserButton />
         </nav>
       </div>

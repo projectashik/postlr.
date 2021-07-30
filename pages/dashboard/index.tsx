@@ -19,9 +19,7 @@ export default function DashboardIndex() {
   const { register } = router.query;
   const { login } = router.query;
 
-  // const posts = [1, 2, 3, 4, 5, 6];
   const scheduledArticles: any[] = [];
-  const draftArticles: any[] = [];
 
   return (
     <>
@@ -70,44 +68,8 @@ export default function DashboardIndex() {
             </div>
           </section>
         )}
-        {draftArticles.length > 0 && (
-          <section id='drafts' className='mt-10'>
-            <div className='flex items-center justify-between'>
-              <h2 className='font-bold '>Draft Articles</h2>
-              <Link href='/'>
-                <a className='flex items-center gap-2 text-primary'>
-                  <span>See all</span> <BsArrowRight />
-                </a>
-              </Link>
-            </div>
-            <div className='mt-4 grid grid-cols-3 gap-4'>
-              {draftArticles &&
-                draftArticles.map((article) => (
-                  <div key={article} className='bg-gray-100 p-4 rounded'>
-                    <p className='font-medium text-lg'>No Title</p>
-                    <p className='text-gray-600'>Created: 2 mins ago</p>
-                    <p className='text-gray-600'>
-                      Platforms: Hashnode, Dev.to, Medium
-                    </p>
-                    <div className='mt-3 grid grid-cols-3 gap-4'>
-                      <button className='flex justify-center w-full bg-gray-200 hover:bg-gray-300 text-gray-700 rounded p-2'>
-                        <FaEye />
-                      </button>
-                      <button className='flex justify-center w-full bg-gray-200 hover:bg-gray-300 text-gray-700 rounded p-2'>
-                        <FaTrash />
-                      </button>
 
-                      <button className='flex justify-center w-full bg-gray-200 hover:bg-gray-300 text-gray-700 rounded p-2'>
-                        <FaExternalLinkAlt />
-                      </button>
-                    </div>
-                  </div>
-                ))}
-            </div>
-          </section>
-        )}
-
-        {draftArticles.length < 1 && scheduledArticles.length < 1 && (
+        {scheduledArticles.length < 1 && (
           <section id='new'>
             <Link href=''>
               <a className='block bg-gray-100 p-4 rounded w-48'>
