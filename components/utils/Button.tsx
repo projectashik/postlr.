@@ -5,13 +5,14 @@ export const Button = ({
   children,
   className,
   loading,
+  disabled = false,
 }: any) => {
   return (
     <button
       type={type}
       onClick={onClick}
       className={className + '  relative disabled:cursor-not-allowed'}
-      disabled={loading}
+      disabled={loading || disabled}
     >
       {loading && (
         <span className='absolute top-0 left-0 flex items-center bg-gray-900 bg-opacity-50 justify-center rounded w-full h-full '>

@@ -17,6 +17,7 @@ async function handler(
     scheduledAt,
     isHashnode,
     isDevTo,
+    isScheduled,
     hashnodeTags,
     hideFromHashnodeFeed,
     hashnodeCoverImageUrl,
@@ -30,7 +31,7 @@ async function handler(
     : coverImage;
   const mainDevToImage = devToCoverImageUrl ? devToCoverImageUrl : coverImage;
   content += '\n\n\n Posted using Postlr. ';
-  if (scheduledAt) {
+  if (isScheduled) {
     try {
       const addDataResponse = await prisma.articles.create({
         data: {
