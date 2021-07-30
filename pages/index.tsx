@@ -30,20 +30,25 @@ export default function HomePage() {
                   </a>
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <Link href='/'>
                   <a className='hover:bg-gray-200 py-1 px-2 rounded  text-gray-700'>
                     Features
                   </a>
                 </Link>
-              </li>
+              </li> */}
               <li>
-                <Link href='/'>
-                  <a className='flex items-center text-gray-700 hover:bg-gray-200 py-1 px-2 rounded gap-1'>
+                <>
+                  <a
+                    href='https://github.com/projectashik/postlr.'
+                    target='_blank'
+                    className='flex items-center text-gray-700 hover:bg-gray-200 py-1 px-2 rounded gap-1'
+                    rel='noreferrer'
+                  >
                     <FaGithub />
                     Github
                   </a>
-                </Link>
+                </>
               </li>
             </ul>
           </nav>
