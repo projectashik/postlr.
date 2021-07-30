@@ -71,7 +71,7 @@ export default function DashboardIndex() {
 
         {scheduledArticles.length < 1 && (
           <section id='new'>
-            <Link href=''>
+            <Link href='/dashboard/create/article'>
               <a className='block bg-gray-100 p-4 rounded w-48'>
                 <button className='flex flex-col items-center w-full border-4 border-gray-400 p-4 border-dashed rounded'>
                   <span className='text-5xl text-gray-400'>
